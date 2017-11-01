@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="page" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="page.png" width="208" height="32"/>
+  <tile id="1">
+   <properties>
+    <property name="block" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="block" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="7" name="main-qimg-42dff05afdfb1b36d23359147e32cb39" tilewidth="32" tileheight="32" tilecount="228" columns="19">
+  <image source="main-qimg-42dff05afdfb1b36d23359147e32cb39.png" width="608" height="384"/>
+  <tile id="4">
+   <properties>
+    <property name="block" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="block" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="block" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="block" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="61">
+   <properties>
+    <property name="block" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Capa de Patrones 1" width="100" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3VQQqDMBCF4ez1BFYQD2ALVfcqqL3/ifoWGRpEIUhqJvgW30YkMvlhzIwx2R/kdEroDg084aVgthSF7jHACNPmO9JJsNc1PY52lXQS2150bQ8K08P9H7BH/B6D+e0X9ojfg7uKPe6MPXSRe6zZQ4U3tNBB73nnleU+k56x50ndDAus8PFsUsDDKp0z+p3zC/tO7DlTwZ2kC3vo8gW1X9v5cBcAAA==
+  </data>
+ </layer>
+ <layer name="col" width="100" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OoREAIAwAsbIRzAD7z0RVHbqI5O79RwAAAADQbWare4Kys9M98akh6dkFp55/iHAXAAA=
+  </data>
+ </layer>
+</map>
