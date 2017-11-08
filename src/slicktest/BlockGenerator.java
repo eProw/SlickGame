@@ -33,11 +33,15 @@ public class BlockGenerator {
                 char c = line.charAt(x);
                 switch(c){
                     case'1':
-                    h.add(new Block(x*32,y*32+140,blockID.QUESTION));
+                    h.add(new Block(x*32,y*32+140,blockID.QUESTION,h));
                     break;
                     
                     case'2':
-                    h.add(new Block(x*32,y*32+140,blockID.BRICK));
+                    h.add(new Block(x*32,y*32+140,blockID.BRICK,h));
+                    break;
+                    
+                    case'3':
+                    h.add(new Block(x*32,y*32+140,blockID.HARD,h));
                     break;
                     
                     default:

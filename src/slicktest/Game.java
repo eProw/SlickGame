@@ -1,62 +1,71 @@
 package slicktest;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class Game extends BasicGame{
-    
-    Handler h;
-    
-    Block b;
     Player player;
+    int sceneNumber;
+    
+    LinkedList<Handler> gameScenes;
+    
+    Level0 menu;
+    Level1 level;
+    
     
     public Game(){
         super("My first game");
+        gameScenes = new LinkedList<Handler>();
+        sceneNumber = Scenes.MainMenu.ordinal();
     }
     
     TiledMap mapa;
     int x=1;
 
     public void init(GameContainer gc) throws SlickException {
+        menu = new Level0();
         
-        mapa = new TiledMap("./assets/map.tmx","assets");
-        h = new Handler();
-        //GENERAR OBSTACULOS
-        try {
-            new BlockGenerator(System.getProperty("user.dir")+"/src/assets/obstacles.txt",h);
-            
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        //CONSTRUIR NIVEL PRINCIPAL
+            setupLevel();
+
         
-        h.generateObstacles(mapa);
-        player = new Player(3*32,17*30+13, h);
-        h.add(player);
+        gameScenes.add(menu);
+        gameScenes.add(level);
     }
 
     public void update(GameContainer gc, int i) throws SlickException {
-       h.update(gc, i);
+       gameScenes.get(sceneNumber).update(gc, i);
+       
+       if(menu.end){
+           sceneNumber = Scenes.Level.ordinal();
+       }
     }
 
     public void render(GameContainer gc, Graphics g) throws SlickException {
-        g.setBackground(new Color(107,140,255));
-        g.translate(-x,0);
-        //g.scale(1.4f, 1.4f);
-        mapa.render(0, 140);
-        
-        h.render(gc, g);
-        g.drawString("0",(player.getX()/32)*32, (player.getY()/32)*32);
-        g.drawString("0",(player.getX()/32)*32+32, (player.getY()/32)*32);
-        
-        //CAMARA SIGUE AL JUGADOR
-        x+=((player.getX()-x)-300/2)*0.05f;
-        
-        if(x < 0){
-            x=0;
+        gameScenes.get(sceneNumber).render(gc, g);
+    }
+    
+    void setupLevel(){
+        try{
+            mapa = new TiledMap("assets/map.tmx","assets");
+            level = new Level1(mapa);
+            //GENERAR OBSTACULOS
+            new BlockGenerator(System.getProperty("user.dir")+"/src/assets/obstacles.txt",level);
+
+            
+            level.generateObstacles(mapa);
+            player = new Player(3*32,17*30+13, level);
+            level.add(player);
+        }catch(Exception ex){
+            //NO HACER NADA, LUEGO ME ENCARGO DE BUSCAR EL ERROR
         }
     }
     
@@ -69,4 +78,9 @@ public class Game extends BasicGame{
         app.setTargetFrameRate(60);
         app.start();
     }
+}
+
+enum Scenes{
+    MainMenu,
+    Level
 }

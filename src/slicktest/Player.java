@@ -18,17 +18,16 @@ public class Player extends GameObject{
     
     double xDelay=0;
     
-    boolean isRight = true, ground = true,spacePressed = false,jumpBySpace = false;
+    boolean isRight = true,spacePressed = false,jumpBySpace = false;
     
     final float GRAVITY = 1;
     int animSpeed = 250;
     
-    int destX, destY,tempX,tempY;
-    
     Handler h;
     
     //COMPROBAR COLISION
-    boolean topLeft,topRight,bottomLeft,bottomRight;
+    /*boolean topLeft,topRight,bottomLeft,bottomRight;
+    int destX, destY,tempX,tempY;*/
     
     public Player(int _x, int _y,Handler h) throws SlickException {
         super(_x, _y);
@@ -62,7 +61,7 @@ public class Player extends GameObject{
         inputUpdate(gc,delta);
         destX = x + velX;
         destY = y + velY;
-        collisions();
+        collisions(h);
         x = destX;
         y = destY;
         
@@ -182,58 +181,5 @@ public class Player extends GameObject{
             runR.setDuration(i, animSpeed);
             runL.setDuration(i, animSpeed);
         }
-    }
-    
-    void calculateCorners(int x,int y){
-        int top = (y-140)/32,bottom = ((y-140+32)/32), left = x/32, right = (x+32-1)/32;
-        topLeft = h.obstacles[left][top];
-        topRight = h.obstacles[right][top];
-        bottomLeft = h.obstacles[left][bottom];
-        bottomRight = h.obstacles[right][bottom];
-    }
-    
-    void collisions(){ //VERSION NUMERO 0.0.1 
-        int columna = (y-140)/32,fila = x/32; 
-        
-        calculateCorners(x,destY);
-        if(velY > 0){
-            if(bottomLeft||bottomRight){
-                velY=0;
-                tempY = columna*32+140+31;
-                ground = true;
-            }else{
-                tempY+=velY;
-            }
-        }
-        if(velY < 0){
-            if(topLeft||topRight){
-                velY = 0;
-                tempY = columna*32+140;
-            }else{
-                tempY+=velY;
-            }
-        }
-        
-        calculateCorners(destX,y);
-        
-        if(velX < 0){
-            if(bottomLeft||topLeft){
-                velX=0;
-                tempX = fila*32;
-            }else{
-                tempX+=velX;
-            }
-        }
-        if(velX > 0){   
-            if(bottomRight||topRight){
-                velX=0;
-                tempX = (destX-tempX)>32?(fila)*32:tempX;
-            }else{
-                tempX+=velX;
-            }
-        }
-        
-        destX = tempX;
-        destY = tempY;
     }
 }
