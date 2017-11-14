@@ -22,7 +22,7 @@ public class Game extends BasicGame{
     
     
     public Game(){
-        super("My first game");
+        super("Slicktest");
         gameScenes = new LinkedList<Handler>();
         sceneNumber = Scenes.MainMenu.ordinal();
     }
@@ -74,7 +74,7 @@ public class Game extends BasicGame{
         app.setDisplayMode(800, 600, false);
         app.setSmoothDeltas(true);
         app.setVSync(true);
-        app.setShowFPS(true);
+        app.setShowFPS(false);
         app.setTargetFrameRate(60);
         app.start();
     }
