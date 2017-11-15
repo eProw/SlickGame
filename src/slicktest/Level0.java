@@ -86,6 +86,8 @@ public class Level0 extends Handler{
     int y=0;
     int numOfLines=10;
     
+    long errTime=0;
+    
     public Level0(){
         eprow = new Cinematic(0,0,"./assets/cinematics/eprow",30,33,false);
         //CINEMATIC: POSITION X & Y, FRAMES PATH, NUM OF FRAMES, MILLIS PER FRAME, CAN LOOP
@@ -233,6 +235,7 @@ public class Level0 extends Handler{
             if(i==9){
                 if(!warn.playing()){
                     warn.play();
+                    errTime = System.currentTimeMillis();
                 }
             }
             
@@ -277,7 +280,7 @@ public class Level0 extends Handler{
                 }
             }
             
-            if(59000+timeTrigger<System.currentTimeMillis()){
+            if(errTime + 14500 < System.currentTimeMillis() && errTime != 0){
                 phase++;
             }
             
