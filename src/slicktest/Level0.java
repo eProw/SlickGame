@@ -8,6 +8,7 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -171,9 +172,7 @@ public class Level0 extends Handler{
     public void render(GameContainer gc, Graphics g){
         g.setBackground(new Color(0,0,0));
         g.drawString("",320, 500);
-        //g.translate(-renderX,renderY);
-        
-        //////////////////////////
+      
         for(GameObject obj:objects){
             obj.render(gc, g);
         }
@@ -320,9 +319,48 @@ public class Level0 extends Handler{
                     cmdTrigger = System.currentTimeMillis()+delay;
                     if(i < cmd3.length-1){
                         i++;
+                    }else{
+                        phase++;
+                        i=0;
                     }
             }
             
+            g.drawString(cmdOut+(System.currentTimeMillis()%400>200?"_":"")+(i==11?process[-(int)(System.currentTimeMillis()/2)%4]:""),0, y);
+        }
+        
+        if(phase == 3){
+            if(i==0){
+                cmdOut += options+"\n";
+                i++;
+            }
+            
+            if(i==1){
+                Input input = gc.getInput();
+                boolean enterKey = false;
+                
+                if(input.isKeyDown(Input.KEY_1)||input.isKeyDown(Input.KEY_2)||input.isKeyDown(Input.KEY_3)){
+                    i++;
+                    cmdOut+="Cargando...\nSeleccione archivo de datos a arrancar:\n1. 31MB datos (e-20% en el sistema)\n2. Archivo vacio\n3. Archivo vacio\n";
+                }
+            }
+            
+            if(i==2){
+                Input input = gc.getInput();
+                if(input.isKeyDown(Input.KEY_1)){
+                    i++;
+                    cmdOut+="Iniciando...\n";
+                }
+                
+                if(input.isKeyDown(Input.KEY_2)){
+                    cmdOut+="No existen datos en el sector\n";
+                    y-=20;
+                }
+                
+                if(input.isKeyDown(Input.KEY_3)){
+                    cmdOut+="No existen datos en el sector\n";
+                    y-=20;
+                }
+            }
             g.drawString(cmdOut+(System.currentTimeMillis()%400>200?"_":"")+(i==11?process[-(int)(System.currentTimeMillis()/2)%4]:""),0, y);
         }
         
