@@ -81,9 +81,16 @@ public class Level0 extends Handler{
 "     !:! !!:      !!: :!!      !!: :!!    !!:   !!:          !:!   !!:  \n" +
 " ::.: :  : ::.: : :::  :: :: :  :   :::    :    : :: ::: ::.: :     :   "
     ,
-        "Iniciando...",
+        "Iniciando sistema...",
+        "Calibrando sensores(70%)",
+        "Calibrando sensores(100%)",
         ""
     };
+    
+    String options = "Seleccione una opcion:\n"
+            + "Proceder a simulacion (1)\n"+
+            "Proceder a simulacion (2)\n"+
+            "Proceder a simulacion (3)";
     
     int i = 0;
     
@@ -117,8 +124,6 @@ public class Level0 extends Handler{
         }
         
         startAmbience.play();
-        /*loop.play();
-        loop.loop();*/
     }
     
     public void update(GameContainer gc, int delta){
