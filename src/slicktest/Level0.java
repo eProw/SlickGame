@@ -106,6 +106,7 @@ public class Level0 extends Handler{
     int numOfLines=10;
     
     long errTime=0;
+    long finishTime = 0;
     
     public Level0(){
         eprow = new Cinematic(0,0,"./assets/cinematics/eprow",30,33,false);
@@ -139,7 +140,7 @@ public class Level0 extends Handler{
             }
         }
         
-        if(timeTrigger+15000<System.currentTimeMillis()){
+        if(timeTrigger+15000<System.currentTimeMillis()&&phase<4){
             if(!loop.playing()){
                 loop.play();
                 loop.loop();
@@ -302,7 +303,7 @@ public class Level0 extends Handler{
                 y=0;
             }
             
-            g.drawString(cmdOut+(System.currentTimeMillis()%400>200?"_":"")+(i==11?process[-(int)(System.currentTimeMillis()/2)%4]:""),0, y);
+            g.drawString(cmdOut+(System.currentTimeMillis()%400>200?"_":"")+(i==11?process[(int)(System.currentTimeMillis()/2)%4]:""),0, y);
         }
         
         if(phase == 2){
@@ -338,7 +339,7 @@ public class Level0 extends Handler{
                 Input input = gc.getInput();
                 boolean enterKey = false;
                 
-                if(input.isKeyDown(Input.KEY_1)||input.isKeyDown(Input.KEY_2)||input.isKeyDown(Input.KEY_3)){
+                if(input.isKeyPressed(Input.KEY_1)||input.isKeyPressed(Input.KEY_2)||input.isKeyPressed(Input.KEY_3)){
                     i++;
                     cmdOut+="Cargando...\nSeleccione archivo de datos a arrancar:\n1. 31MB datos (e-20% en el sistema)\n2. Archivo vacio\n3. Archivo vacio\n";
                 }
@@ -346,23 +347,42 @@ public class Level0 extends Handler{
             
             if(i==2){
                 Input input = gc.getInput();
-                if(input.isKeyDown(Input.KEY_1)){
-                    i++;
+                if(input.isKeyPressed(Input.KEY_1)){
+                    phase++;
+                    finishTime = System.currentTimeMillis();
                     cmdOut+="Iniciando...\n";
+                    
                 }
                 
-                if(input.isKeyDown(Input.KEY_2)){
+                if(input.isKeyPressed(Input.KEY_3)){
                     cmdOut+="No existen datos en el sector\n";
                     y-=20;
                 }
                 
-                if(input.isKeyDown(Input.KEY_3)){
+                if(input.isKeyPressed(Input.KEY_2)){
                     cmdOut+="No existen datos en el sector\n";
                     y-=20;
                 }
             }
+            
             g.drawString(cmdOut+(System.currentTimeMillis()%400>200?"_":"")+(i==11?process[-(int)(System.currentTimeMillis()/2)%4]:""),0, y);
         }
+        
+        if(phase==4){
+            if(alpha >0){
+                 alpha-=.02f;
+                 loop.setVolume(alpha);
+             }else{
+                 alpha = 0;
+                 
+                 loop.stop();
+                 endScene();  
+             }
+
+             if(finishTime+500>System.currentTimeMillis())
+             g.drawString(cmdOut+(System.currentTimeMillis()%400>200?"_":"")+(i==11?process[-(int)(System.currentTimeMillis()/2)%4]:""),0, y);
+        }
+        
         
         try {
             Image dirt = new Image("./assets/dirt.png").getScaledCopy(.8f);
@@ -401,5 +421,13 @@ public class Level0 extends Handler{
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    
+    public void endScene(){
+        end = true;
+        startUp.stop();
+        startAmbience.stop();
+        warn.stop();
+        amb.stop();
     }
 }
