@@ -78,7 +78,7 @@ public class Block extends GameObject{
 
     public void render(GameContainer gc,Graphics g) {
         if(exists)
-        anim.draw(x,y);
+            anim.draw(x,y);
     }
     
     public void updateImage() throws SlickException{

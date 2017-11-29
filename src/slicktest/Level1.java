@@ -10,19 +10,28 @@ import slicktest.Block;
 import slicktest.GameObject;
 import slicktest.Particle;
 import slicktest.Player;
+import slicktest.GameDialogue.*;
 
 public class Level1 extends Handler{
     
     TiledMap mapa;
+    
+    Phase phase;
+    int dialogueNum = 0;
+    
+    Dialogue dialogue;
+    
     public Level1(TiledMap _mapa){
+        phase = Phase.dialogue;
         mapa = _mapa;
+        dialogue = new Dialogue();
     }
     
     public void update(GameContainer gc, int delta){
         for(int i = 0; i < objects.size();i++){
             GameObject obj = objects.get(i);
             obj.update(gc, delta);
-
+        
             if(obj.getClass() == Block.class){
                 if(!((Block)obj).exists){
                     fireworks(obj.x,obj.y);
@@ -41,12 +50,24 @@ public class Level1 extends Handler{
     }
     
     public void render(GameContainer gc, Graphics g){
-        g.setBackground(new Color(107,140,255));
-        g.translate(-renderX,renderY);
-        mapa.render(0,140);
-        //////////////////////////
-        for(GameObject obj:objects){
-            obj.render(gc, g);
+        if(phase == Phase.game){
+            g.setBackground(new Color(107,140,255));
+            g.translate(-renderX,renderY);
+            mapa.render(0,140);
+            //////////////////////////
+            for(GameObject obj:objects){
+                obj.render(gc, g);
+            }
+        }
+        
+        if(phase == Phase.dialogue){
+            g.setBackground(Color.black);
+            dialogue.print(g,gc,DScript.string[0]);
+            phase= Phase.g_d;
+        }
+        
+        if(phase == Phase.g_d){
+            
         }
     }
     
@@ -73,13 +94,6 @@ public class Level1 extends Handler{
                 obstacles[obj.getX()/32][(obj.getY()-140)/32] = true;
             }
         }
-        
-        /*for(int x=0; x < map.getWidth();x++){
-            for(int y=0; y < map.getHeight();y++){
-                if(obstacles[x][y])
-                add(new Block(x*32,y*32,blockID.HARD));
-            }
-        }*/
     }
     
     void fireworks(int x,int y){
@@ -105,5 +119,11 @@ public class Level1 extends Handler{
                             add(p2);
                             add(p3);
                             add(p4);
+    }
+    
+    enum Phase{
+        game,
+        dialogue,
+        g_d
     }
 }
