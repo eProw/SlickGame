@@ -21,6 +21,10 @@ public class Level1 extends Handler{
     
     Dialogue dialogue;
     
+    int i = 0;
+        String printed="";
+        double delay=20,time=0;
+    
     public Level1(TiledMap _mapa){
         phase = Phase.dialogue;
         mapa = _mapa;
@@ -62,10 +66,19 @@ public class Level1 extends Handler{
         
         if(phase == Phase.dialogue){
             g.setBackground(Color.black);
-            dialogue.print(g,gc,DScript.string[0]);
-            phase= Phase.g_d;
+            //dialogue.print(g,gc,DScript.string[0]);
+            if(i < DScript.string[0].length()){
+                if(time<System.currentTimeMillis()){
+                    printed += DScript.string[0].charAt(i);
+                    
+                    i++;
+                    time = System.currentTimeMillis()+20;
+                }
+                g.drawString(printed, 0, 300);
+            }else{
+                phase= Phase.g_d;
+            }
         }
-        
         if(phase == Phase.g_d){
             
         }
@@ -125,5 +138,20 @@ public class Level1 extends Handler{
         game,
         dialogue,
         g_d
+    }
+    
+    public void print(Graphics g,GameContainer gc, String msg){
+        int i = 0;
+        String printed="";
+        double delay=20,time=0;
+        while(i < msg.length()){
+            if(time<System.currentTimeMillis()){
+                printed += msg.charAt(i);
+                g.drawString(printed, 0, 300);
+                i++;
+                time = System.currentTimeMillis()+20;
+            }
+        }
+
     }
 }
