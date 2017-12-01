@@ -395,7 +395,7 @@ public class Level0 extends Handler{
             reflect.draw();
             
         } catch (SlickException ex) {
-           // Logger.getLogger(Level0.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
     
