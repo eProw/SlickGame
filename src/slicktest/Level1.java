@@ -5,6 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.tiled.TiledMap;
@@ -26,11 +27,17 @@ public class Level1 extends Handler{
     int i = 0;
     String printed="";
     double delay=20,time=0;
+     Sound sound;
     
     public Level1(TiledMap _mapa){
         phase = Phase.dialogue;
         mapa = _mapa;
         dialogue = new Dialogue();
+        
+         try {
+            sound = new Sound("./Sound/dialogTalk.ogg");
+        } catch (SlickException ex) {
+        }
     }
     
     public void update(GameContainer gc, int delta){
@@ -71,7 +78,7 @@ public class Level1 extends Handler{
             if(!dialogue.done){
             dialogue.print(g,gc,DScript.string[0]);
             }else{
-                phase= Phase.g_d;
+                phase= Phase.game;
             }            
         }
         if(phase == Phase.g_d){

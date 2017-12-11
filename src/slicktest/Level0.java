@@ -101,7 +101,7 @@ public class Level0 extends Handler{
     Cinematic eprow;
     float alpha = 0;
     
-    boolean playedCin=false;
+    boolean playedCin=false,started = false;
     int y=0;
     int numOfLines=10;
     
@@ -111,7 +111,6 @@ public class Level0 extends Handler{
     public Level0(){
         eprow = new Cinematic(0,0,"./assets/cinematics/eprow",30,33,false);
         //CINEMATIC: POSITION X & Y, FRAMES PATH, NUM OF FRAMES, MILLIS PER FRAME, CAN LOOP
-        timeTrigger = System.currentTimeMillis()+5000;
         
         loadFont(java.awt.Color.WHITE);
         r = new Random();
@@ -124,11 +123,14 @@ public class Level0 extends Handler{
             loop = new Music("./Sound/loop.ogg");
         } catch (SlickException ex) {
         }
-        
-        startAmbience.play();
     }
     
     public void update(GameContainer gc, int delta){
+        if(!started){
+            start();
+            started = true;
+        }
+        
         for(int i = 0; i < objects.size();i++){
             GameObject obj = objects.get(i);
             obj.update(gc, delta);
@@ -168,6 +170,11 @@ public class Level0 extends Handler{
                 playedCin = true;
             }
         }
+    }
+    
+    void start(){
+        startAmbience.play();
+        timeTrigger = System.currentTimeMillis()+5000;
     }
     
     public void render(GameContainer gc, Graphics g){
@@ -398,6 +405,8 @@ public class Level0 extends Handler{
 
         }
     }
+    
+    
     
     public void add(GameObject obj){
         objects.add(obj);

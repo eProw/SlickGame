@@ -2,9 +2,10 @@ package slicktest.GameDialogue;
 
 public abstract class DScript {
     public static String[] string ={
-        "HOLA MUNDO!\n"+
-            "Esto es una prueba visual creada por el parguela de jose, para comprobar que el maravilloso sistemade dialogo funciona tal y como se esperaba. Como  puedes "+
-            "ver, es bastante parecido a como se ve en  las consolas portatiles de doble pantalla...\nPINOCHO JAJA EQUISDE....",
+        "Creo que ya lo tengo.\n" +
+"Aunque haya hecho un numero considerable de cambios, puede que delimitar la zona haya sido una opcion bastante mas viable...\n" +
+"Voy a aplicar los cambios en la formula, espero que esto solucione el problema de raiz..~"+
+            "COMPILANDO EN 3,1,2..",
         "/switch/"
     };
 }

@@ -24,7 +24,7 @@ public class Game extends BasicGame{
     public Game(){
         super("Slicktest");
         gameScenes = new LinkedList<Handler>();
-        sceneNumber = Scenes.Level.ordinal();
+        sceneNumber = Scenes.MainMenu.ordinal();
     }
     
     TiledMap mapa;
