@@ -165,6 +165,10 @@ public class Player extends GameObject{
             }
             player.update(delta);
         }
+        
+        if(x + velX < 0){
+            velX=0;
+        }
     }
     
     public void movementUpdate(int delta){

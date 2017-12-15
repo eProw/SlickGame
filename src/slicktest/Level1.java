@@ -28,6 +28,8 @@ public class Level1 extends Handler{
     String printed="";
     double delay=20,time=0;
      Sound sound;
+     
+    int dialogNum = 0;
     
     public Level1(TiledMap _mapa){
         phase = Phase.dialogue;
@@ -54,6 +56,14 @@ public class Level1 extends Handler{
             
             if(obj.getClass() == Player.class){
                     renderX+=((obj.getX()-renderX)-300/2)*0.05f;
+                    
+                    if(obj.getX() > 400){
+                        obj.setX(400);
+                        
+                        dialogue.done = false;
+                        dialogNum = 1;
+                        phase = Phase.dialogue;
+                    }
             }
         }
         
@@ -76,7 +86,7 @@ public class Level1 extends Handler{
         if(phase == Phase.dialogue){
             g.setBackground(Color.black);
             if(!dialogue.done){
-            dialogue.print(g,gc,DScript.string[0]);
+            dialogue.print(g,gc,DScript.string[dialogNum]);
             }else{
                 phase= Phase.game;
             }            
